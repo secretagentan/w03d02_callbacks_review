@@ -22,15 +22,41 @@
    *
    *
    */
+  var myObject = { //key: value,
+    1: "Boshika",
+    name: "Tara",
+    3: "Los Angeles"
+  }
+// for...in loop syntax
+  // for(var key in myObject) {
+    console.log(1); // ==> returns 1
+    // console.log(myObject[key]); ==> console error
+    console.log(myObject.name); // ==> returns Tara
+    console.log(myObject["name"]); // ==> returns Tara
+    // console.log(myObject.1); ==> console error
+    console.log(myObject[1]); // ==> returns Boshika
+  // }
 
   // Call callback(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
   //
   // Note: _.each does not have a return value, but rather simply runs the
   // callback function over each item in the input collection.
-  _.each = function(collection, iterator) {
+  _.each = function(collection, callback) {
+    if(Array.isArray(collection)) {
+      for(var i = 0; i < collection.length; i++) {
+        callback(collection[i], i, collection);
+      }
+    } else if (!Array.isArray(collection)) {
+      for (var key in collection) {
+        callback(collection[key], key, collection);
+      }
+    }
+  };
 
-};
+document.write(_.each([1,2,3], function(value, index, thisArray){
+  console.log(value + " " + index + " " + thisArray);
+}))
 
   // Return the results of applying an callback to each element.
   _.map = function(collection, callback) {
